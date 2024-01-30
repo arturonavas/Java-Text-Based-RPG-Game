@@ -31,11 +31,16 @@ public class RPGLogic {
 			System.out.print("-");
 		System.out.println();
 	}
+	public static void resetGame() {
+		player = null; // Puedes ajustar esto según sea necesario
+		isRunning = false;
+		Main.main();
+	}
 
 	public static void printHeading(String title) {
-		//printSep(40);
+		printSep(40);
 		System.out.println(title);
-		//printSep(40);
+		printSep(40);
 	}
 
 	public static void toContinue() {
