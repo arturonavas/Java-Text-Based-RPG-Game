@@ -1,4 +1,22 @@
 package net.rpg.main;
 
-public abstract class Enemy {
+public abstract class Enemy extends Player{
+	//Vriable para guardar la experiencia del jugador actual
+	int playerXP;
+	//Constructor para el enemigo especifico
+	public Enemy(String name, int playerXP) {
+		super(name, (int)(Math.random()*playerXP+playerXP/3 +5), (int) (Math.random()*playerXP/4+2)+1);
+		//Asignando variables
+		this.playerXP = playerXP;
+	}
+	//Calculo de el ataque y defensa especificos de los enemigos
+	@Override
+	public int attack() {
+		return 0;
+	}
+
+	@Override
+	public int defense() {
+		return 0;
+	}
 }

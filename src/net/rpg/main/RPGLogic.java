@@ -24,6 +24,91 @@ public class RPGLogic {
 		} while (input < 1 || input > userChoices);
 		return input;
 	}
+	//comandos de batalla
+	public static String [] encounters = {"Batalla","Batalla","Batalla","Descanso","Descanso"};
+	//Nombre de los enemigos
+	public static String [] enemies = {"Espectro Helado","Orco","Mago Corrupto","Orco","Quimera"};
+
+
+	//para saber en que lugar se encuentra el jugador
+	public static int place = 1, act;
+	public static String [] places = {"Montanas eternas", "Tierras Embrujadas","Castillo del Emperador", "Sala del Trono"};
+	//Metodo que cambia los valores del juego segun el nivel de la experiencia del jugador
+	public static void checkAct(){
+		// Cambiar acto basado en experiencia
+		if(player.xp >= 10 && act == 1){
+			// Incrementar acto y ubicación
+			act = 2;
+			place = 1;
+			// Historia
+			Story.printFirstActOutro();
+			// Permitir que el jugador "suba de nivel"
+			player.chooseTrait();
+			// Historia
+			Story.printSecondActIntro();
+			// Asignar nuevos valores a los enemigos
+			enemies[0] = "Mercenario Malvado";
+			enemies[1] = "Goblin";
+			enemies[2] = "Manada de Lobos";
+			enemies[3] = "Esbirro del Emperador Malvado";
+			enemies[4] = "Desconocido Aterrador";
+			// Asignar nuevos valores a los encuentros
+			encounters[0] = "Batalla";
+			encounters[1] = "Batalla";
+			encounters[2] = "Batalla";
+			encounters[3] = "Descanso";
+			encounters[4] = "Tienda";
+		}else if(player.xp >= 50 && act == 2){
+			// Incrementar acto y ubicación
+			act = 3;
+			place = 2;
+			// Historia
+			Story.printSecondActOutro();
+			// Subir de nivel
+			player.chooseTrait();
+			// Historia
+			Story.printThirdActIntro();
+			// Asignar nuevos valores a los enemigos
+			enemies[0] = "Mercenario Malvado";
+			enemies[1] = "Mercenario Malvado";
+			enemies[2] = "Esbirro del Emperador Malvado";
+			enemies[3] = "Esbirro del Emperador Malvado";
+			enemies[4] = "Esbirro del Emperador Malvado";
+			// Asignar nuevos valores a los encuentros
+			encounters[0] = "Batalla";
+			encounters[1] = "Batalla";
+			encounters[2] = "Batalla";
+			encounters[3] = "Batalla";
+			encounters[4] = "Tienda";
+			// Curar completamente al jugador
+			player.hp = player.maxHP;
+		}else if(player.xp >= 100 && act == 3){
+			// Incrementar acto y ubicación
+			act = 4;
+			place = 3;
+			// Historia
+			Story.printThirdActOutro();
+			// Subir de nivel
+			player.chooseTrait();
+			// Historia
+			Story.printFourthActIntro();
+			// Curar completamente al jugador
+			player.hp = player.maxHP;
+			// Llamada a la batalla final
+			//finalBattle();
+		}
+	}
+	//Metodo para el encuentro aleatorio
+	public static void randomEncounter(){
+		int encounter = (int) (Math.random()* encounters.length);
+		if (encounters[encounter].equals("Battle")){
+			//randomBattle();
+		}else if (encounters[encounter].equals("Rest")){
+			//takeRest();
+		}else{
+			//shop();
+		}
+	}
 
 	public static void printSep(int n) {
 
@@ -82,6 +167,11 @@ public class RPGLogic {
 				nameSet = true;
 			}
 		} while (!nameSet);
+
+		//imprimir la historia del juego
+		Story.printIntro();
+
+
 		player = new Character(name);
 		//Hacer que "isRunnig" sea true para que el loop del juego empiece
 		isRunning = true;
@@ -90,6 +180,12 @@ public class RPGLogic {
 		gameLoop();
 	}
 	public static  void continueJourney(){
+		//Checkea en que parte de de la historia deberiamos estar
+		checkAct();
+		//Checkea si el juego no esta en la pelea final
+		if (act != 4) {
+			randomEncounter();
+		}
 
 	}
 	//imprimir la informacion mas importante del jugador
@@ -113,7 +209,7 @@ public class RPGLogic {
 	//Imprimir el menu principal
 	public static void printMenu(){
 		printSep(10);
-		printHeading("MENU");
+		printHeading(places[place]);
 		printSep(10);
 		System.out.println("Elige una accion");
 		printSep(20);

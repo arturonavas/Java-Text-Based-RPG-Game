@@ -21,7 +21,7 @@ public class Character extends Player {
 	// Métodos específicos del jugador
 	@Override
 	public int attack() {
-		return 0;
+		return (int) (Math.random()*(xp/4 +numAtkUpgrade*3 + 3) + xp/10);
 	}
 
 	@Override
