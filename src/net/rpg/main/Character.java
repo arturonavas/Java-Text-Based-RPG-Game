@@ -21,12 +21,12 @@ public class Character extends Player {
 	// Métodos específicos del jugador
 	@Override
 	public int attack() {
-		return (int) (Math.random()*(xp/4 +numAtkUpgrade*3 + 3) + xp/10);
+		return (int) (Math.random()*(xp/4 +numAtkUpgrade*3 + 3) + xp/10 + numAtkUpgrade*2 + numDefUpgrade + 1);
 	}
 
 	@Override
 	public int defense() {
-		return 0;
+		return (int) (Math.random()*(xp/4 +numDefUpgrade*3 + 3) + xp/10 + numDefUpgrade*2 + numAtkUpgrade + 1);
 	}
 
 	public void chooseTrait() {

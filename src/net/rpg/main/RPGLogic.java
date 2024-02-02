@@ -98,6 +98,23 @@ public class RPGLogic {
 			//finalBattle();
 		}
 	}
+	//Metodo para crear una batalla aleatoria
+	public static void randomBattle(){
+		printHeading("Te has topado con un enemigo. Preparate para luchar!");
+		toContinue();
+		//Crear un nuevo enemigo con un nombre aleatorio
+		battle(new Enemy(enemies[(int) (Math.random() * enemies.length)], player.xp));
+	}
+	//metodo PRINCIPAL de la batalla
+	private static void battle(Enemy enemy) {
+		while (true) {
+			printHeading(STR."\{enemy.name} /HP: \{enemy.hp} / \{enemy.maxHP}");
+			printHeading(STR."\{player.name} /HP: \{player.hp} / \{player.maxHP}");
+			System.out.println("Elige una accion");
+			printSep(10);
+		}
+	}
+
 	//Metodo para el encuentro aleatorio
 	public static void randomEncounter(){
 		int encounter = (int) (Math.random()* encounters.length);
@@ -111,11 +128,11 @@ public class RPGLogic {
 	}
 
 	public static void printSep(int n) {
-
 		for (int i = 0; i < n; i++)
 			System.out.print("-");
 		System.out.println();
 	}
+
 	public static void resetGame() {
 		player = null; // Puedes ajustar esto según sea necesario
 		isRunning = false;
